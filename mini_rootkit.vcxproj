@@ -22,42 +22,25 @@
   </ImportGroup>
   <ItemGroup Label="WrappedTaskItems" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <!-- ICI VOUS METTEZ LE NOM DU DRIVER -->
     <TargetName>mini_rootkit</TargetName>
-    <!-- /ICI VOUS METTEZ LE NOM DU DRIVER -->
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ResourceCompile>
-    </ResourceCompile>
     <ClCompile>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src</AdditionalIncludeDirectories>
-      <ExceptionHandling>
-      </ExceptionHandling>
     </ClCompile>
-    <Midl>
-    </Midl>
     <DriverSign>
       <FileDigestAlgorithm>sha256</FileDigestAlgorithm>
     </DriverSign>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <!-- ICI VOUS METTEZ LE(S) NOM(S) DU(DES) FICHIER(S) -->
     <ClCompile Include="src/rootkit/*.c">
+      <!-- Ignore warnings for nameless nested structs/unions in opaque kernel types -->
       <AdditionalOptions>/wd4201 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
-    <!-- /ICI VOUS METTEZ LE(S) NOM(S) DU(DES) FICHIER(S) -->
   </ItemGroup>
   <ItemGroup>
     <Inf Exclude="@(Inf)" Include="*.inx" />
     <FilesToPackage Include="$(TargetPath)" Condition="'$(ConfigurationType)'=='Driver' or '$(ConfigurationType)'=='DynamicLibrary'" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Exclude="@(None)" Include="*.txt;*.htm;*.html" />
-    <None Exclude="@(None)" Include="*.ico;*.cur;*.bmp;*.dlg;*.rct;*.gif;*.jpg;*.jpeg;*.wav;*.jpe;*.tiff;*.tif;*.png;*.rc2" />
-    <None Exclude="@(None)" Include="*.def;*.bat;*.hpj;*.asmx" />
-  </ItemGroup>
-  <ItemGroup>
-    <!-- <ClInclude Exclude="@(ClInclude)" Include="*.h;*.hpp;*.hxx;*.hm;*.inl;*.xsd" /> -->
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
