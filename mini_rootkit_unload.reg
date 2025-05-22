@@ -1,0 +1,7 @@
+Windows Registry Editor Version 5.00
+
+[-HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\mini_rootkit\Instances\mini_rootkit_Instance]
+
+[-HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\mini_rootkit\Instances]
+
+[-HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\mini_rootkit]

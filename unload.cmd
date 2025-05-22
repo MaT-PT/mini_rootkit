@@ -7,10 +7,13 @@ set DRVDIR=%WINDIR%\System32\drivers
 echo UNLOAD DRIVER %DRVNAME%
 
 echo STOP/DELETE SERVICE
-sc.exe stop %DRVNAME%
-sc.exe delete %DRVNAME%
+sc stop %DRVNAME%
+sc delete %DRVNAME%
+
+echo CLEAN REGISTRY KEYS
+reg import mini_rootkit_unload.reg
 
 echo DELETE DRIVER FROM SYSTEM32\DRIVERS
 del %DRVDIR%\%DRVNAME%.sys
 
-pause
+:: pause

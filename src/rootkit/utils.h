@@ -12,6 +12,17 @@
 #define DBG_PREFIX "[" MODULE_NAME "] "
 #define MyDbgPrint(_fmt, ...) DbgPrint(DBG_PREFIX _fmt "\n", ##__VA_ARGS__)
 
+#define FIELD_VALUE(_struct, _type, _offset) (*(_type*)((PBYTE)(_struct) + (_offset)))
+
+// Round down to the previous multiple of _mult (_mult must be a power of 2)
+#define MY_ALIGN_DOWN_BY(_n, _mult) ((_n) & ~((_mult) - 1))
+// Round up to the next multiple of _mult (_mult must be a power of 2)
+#define MY_ALIGN_UP_BY(_n, _mult) MY_ALIGN_DOWN_BY((_n) + (_mult) - 1, _mult)
+// Align pointer down (to the previous multiple of 8 on 64-bit systems)
+#define MY_ALIGN_DOWN_PTR(_n) MY_ALIGN_DOWN_BY(_n, sizeof(ULONG_PTR))
+// Align pointer up (to the next multiple of 8 on 64-bit systems)
+#define MY_ALIGN_UP_PTR(_n) MY_ALIGN_UP_BY(_n, sizeof(ULONG_PTR))
+
 #define HIDDEN_PID_LIST_SIZE 256
 
 typedef struct _HIDDEN_PID {

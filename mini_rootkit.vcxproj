@@ -31,11 +31,16 @@
     <DriverSign>
       <FileDigestAlgorithm>sha256</FileDigestAlgorithm>
     </DriverSign>
+    <Link>
+      <!-- Additional lib for minifilters -->
+      <AdditionalDependencies>fltMgr.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src/rootkit/*.c">
       <!-- Ignore warnings for nameless nested structs/unions in opaque kernel types -->
       <AdditionalOptions>/wd4201 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/std:clatest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
