@@ -45,12 +45,13 @@ int main(int argc, char* argv[]) {
         putchar('\n');
         puts("Available functions:");
         puts("  " S_ROOT_PID " <pid> - Elevate a process by PID");
-        puts("  " S_HIDE_PID " <pid> - Hide a process by PID");
+        puts("  " S_HIDE_PID " <pid> - Hide a process by PID (max 256 hidden PIDs)");
         puts("  " S_SHOW_PID " <pid> - Show a previously hidden process");
         puts("  " S_START_PROCESS
              " <cmdline> - Start a new process with admin privileges and hide it immediately");
         puts("  " S_HIDE_FILE
-             " <exact|substring|prefix|suffix> <pattern> - Hide files matching 'pattern'");
+             " <exact|substring|prefix|suffix> <pattern> - Hide files matching 'pattern' (max 64 "
+             "patterns)");
         puts("  " S_SHOW_FILE
              " <exact|substring|prefix|suffix> <pattern> - Remove pattern from hidden file list");
         putchar('\n');
@@ -58,10 +59,10 @@ int main(int argc, char* argv[]) {
         printf("PID %ld refers to the parent process\n", PID_PARENT);
         putchar('\n');
         puts("Pattern matching types:");
-        puts("  exact - Match the entire string");
+        puts("  exact     - Match the entire string");
         puts("  substring - Match anywhere in the string");
-        puts("  prefix - Match the beginning of the string");
-        puts("  suffix - Match the end of the string");
+        puts("  prefix    - Match the beginning of the string");
+        puts("  suffix    - Match the end of the string");
         ret = ERROR_INVALID_PARAMETER;
         goto ret;
     }
