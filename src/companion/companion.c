@@ -160,7 +160,13 @@ int main(int argc, char* argv[]) {
                 goto close_dev;
             }
 
-            printf("%s PID: %ld...\n", function == FN_HIDE_PID ? "Hiding" : "Showing", lPid);
+            if (lPid == PID_SELF) {
+                printf("%s current process...\n", function == FN_HIDE_PID ? "Hiding" : "Showing");
+            } else if (lPid == PID_PARENT) {
+                printf("%s parent process...\n", function == FN_HIDE_PID ? "Hiding" : "Showing");
+            } else {
+                printf("%s PID: %ld...\n", function == FN_HIDE_PID ? "Hiding" : "Showing", lPid);
+            }
             status =
                 DeviceIoControl(hDevice, function == FN_HIDE_PID ? IOCTL_HIDE_PID : IOCTL_SHOW_PID,
                                 &lPid, sizeof(lPid), NULL, 0, &dwBytesReturned, NULL);
