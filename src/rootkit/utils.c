@@ -153,12 +153,15 @@ BOOL IsFileHidden(IN LPCWSTR lpFileName, IN ULONG ulFileNameLength) {
     return FALSE;
 }
 
-NTSTATUS RemoveHiddenFile(IN LPCWSTR lpFileName, IN ULONG ulFileNameLength) {
+NTSTATUS RemoveHiddenFile(IN LPCWSTR lpFileName, IN ULONG ulFileNameLength,
+                          IN MATCH_TYPE matchType) {
     PHIDDEN_FILE pHiddenFile = NULL;
     ULONG ulHiddenLength;
 
     if (lpFileName == NULL || ulFileNameLength == 0 ||
         ulFileNameLength > ARRAYSIZE(gHiddenFileList->FileName)) {
+        MyDbgPrint("RemoveHiddenFile: Invalid file name or length (Name: %p, Length: %lu)",
+                   lpFileName, ulFileNameLength);
         return STATUS_INVALID_PARAMETER;
     }
 
@@ -170,7 +173,7 @@ NTSTATUS RemoveHiddenFile(IN LPCWSTR lpFileName, IN ULONG ulFileNameLength) {
             break;
         }
 
-        if (ulFileNameLength == ulHiddenLength &&
+        if (ulFileNameLength == ulHiddenLength && (MATCH_TYPE)pHiddenFile->MatchType == matchType &&
             wcsncmp(lpFileName, pHiddenFile->FileName, ulHiddenLength) == 0) {
             for (; i < HIDDEN_FILE_LIST_SIZE - 1 && gHiddenFileList[i].FileNameLength != 0; ++i) {
                 gHiddenFileList[i] = gHiddenFileList[i + 1];

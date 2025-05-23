@@ -10,6 +10,8 @@
 #define S_HIDE_PID "hide_pid"
 #define S_SHOW_PID "show_pid"
 #define S_START_PROCESS "start_process"
+#define S_HIDE_FILE "hide_file"
+#define S_SHOW_FILE "show_file"
 
 typedef enum _FUNCTION {
     FN_INVALID = -1,
@@ -17,6 +19,8 @@ typedef enum _FUNCTION {
     FN_HIDE_PID = 1,
     FN_SHOW_PID = 2,
     FN_START_PROCESS = 3,
+    FN_HIDE_FILE = 4,
+    FN_SHOW_FILE = 5,
 } FUNCTION;
 
 #define CHECK_ARG(_sArg, _sValue) (!strncmp((_sArg), (_sValue), (sizeof(_sValue) - 1)))

