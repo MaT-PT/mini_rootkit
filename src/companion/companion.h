@@ -21,7 +21,7 @@ typedef enum _FUNCTION {
 
 #define CHECK_ARG(_sArg, _sValue) (!strncmp((_sArg), (_sValue), (sizeof(_sValue) - 1)))
 
-static inline VOID PrintError(IN CONST LPCSTR lpMsg) {
+static inline VOID PrintError(IN LPCSTR lpMsg) {
     // Get the latest error ID
     CONST DWORD dwErrId = GetLastError();
     printf("[ERR: %d] %s: ", dwErrId, lpMsg);

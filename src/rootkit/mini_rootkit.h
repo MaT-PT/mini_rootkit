@@ -3,7 +3,7 @@
 
 #include <ntifs.h>
 #include <wdm.h>
-#include "shared/ioctl.h"
+#include "shared/rootkit_uapi.h"
 
 DRIVER_INITIALIZE DriverEntry;
 DRIVER_UNLOAD DriverUnload;

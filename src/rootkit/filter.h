@@ -8,7 +8,7 @@
 #include <minwindef.h>
 
 typedef typeof(((PFLT_PARAMETERS)NULL)->DirectoryControl.QueryDirectory) QUERY_DIRECTORY,
-    *PQUERY_DIRECTORY;
+    *PQUERY_DIRECTORY;  // Type alias for the unnamed QueryDirectory structure
 
 extern PFLT_FILTER gFilterHandle;
 extern CONST FLT_REGISTRATION FilterRegistration;

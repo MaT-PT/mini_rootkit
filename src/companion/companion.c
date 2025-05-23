@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <winioctl.h>
-#include "shared/ioctl.h"
+#include "shared/rootkit_uapi.h"
 
 // Start a process with the specified command line and wait for it to finish if bWait is TRUE
 // Return the exit code of the process if bWait is TRUE, otherwise the new process ID

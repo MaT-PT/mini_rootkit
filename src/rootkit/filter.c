@@ -50,16 +50,6 @@ NTSTATUS FLTAPI FilterUnload(IN FLT_FILTER_UNLOAD_FLAGS Flags) {
     return STATUS_SUCCESS;
 }
 
-BOOL ShouldHideFile(IN LPCWSTR lpFileName, IN ULONG ulFileNameLength) {
-    UNREFERENCED_PARAMETER(ulFileNameLength);
-    if (wcsstr(lpFileName, L"secret.txt") != NULL) {
-        // MyDbgPrint("Hiding file: %.*ws", ulFileNameLength, lpFileName);
-        return TRUE;
-    }
-    // MyDbgPrint("Not hiding file: %.*ws", ulFileNameLength, lpFileName);
-    return FALSE;
-}
-
 FLT_POSTOP_CALLBACK_STATUS PostDirectoryControl(IN OUT PFLT_CALLBACK_DATA Data,
                                                 IN PCFLT_RELATED_OBJECTS FltObjects,
                                                 IN OPTIONAL PVOID CompletionContext,
@@ -143,7 +133,7 @@ FLT_POSTOP_CALLBACK_STATUS PostDirectoryControl(IN OUT PFLT_CALLBACK_DATA Data,
                    ulFileNameLengthCh, lpFileName, ulNextEntryOffset, ulEntryLength,
                    ullTotalLength);
 
-        if (ShouldHideFile(lpFileName, ulFileNameLengthCh)) {
+        if (IsFileHidden(lpFileName, ulFileNameLengthCh)) {
             MyDbgPrint("> Hiding file %.*ws", ulFileNameLengthCh, lpFileName);
             if (ulNextEntryOffset == 0)  // Last entry
             {
